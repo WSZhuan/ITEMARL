@@ -1,0 +1,38 @@
+# --- IDE ---
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- package and distribution ---
+*.egg
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+
+# --- your experiment data, models, and logs  ---
+checkpoints/
+*.pth
+*.pt
+*.bin
+*.tar
+logs/
+runs/
+data/
+outputs/
+results/
+
+# --- system files ---
+.DS_Store
+Thumbs.db
+desktop.ini
