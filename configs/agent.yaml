@@ -1,0 +1,26 @@
+# configs/agent.yaml
+# Agent hyperparameters configuration
+# Transformer encoder
+embed_dim: 20           # input / state vector dimension
+num_layers: 2           # Transformer block number
+ff_expand_ratio: 4      # FFN expansion ratio
+# Actor 网络
+actor_h1: 256
+actor_h2: 64
+log_std_min: -20
+log_std_max: 2
+# Critic 网络
+critic_h1: 256
+critic_h2: 64
+# SAC parameters
+lr: 3e-4                # Actor/Critic learning rate
+alpha: 0.02             # initial entropy coefficient
+alpha_lr: 1e-3          # entropy coefficient learning rate
+gamma: 0.99             # discount factor
+polyak: 0.995            # target network smoothing coefficient (1 - tau)
+# TD3 parameters
+policy_noise: 0.2       # Std of target policy smoothing noise
+noise_clip: 0.5         # Limit for target policy noise
+policy_delay: 2         # Frequency of delayed policy updates
+# multi-threaded parallel sampling
+num_workers: 5             # worker number

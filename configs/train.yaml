@@ -1,0 +1,50 @@
+# configs/train.yaml
+# Training process parameters
+num_episodes: 1800         # Total training episodes
+max_steps: 800            # Maximum steps per episode
+buffer_size: 1000000       # Replay Buffer capacity
+batch_size: 256            # Batch size for sampling
+update_per_step: 3         # Number of agent.update() calls per step
+log_interval: 10           # Log interval (Episode)
+
+# Evaluation parameters
+eval_interval_episodes: 50 # Interval for evaluation (Episode)
+eval_episodes: 1000        # Number of episodes for evaluation (default 1000, can be overridden in eval.py)
+
+# Curriculum learning configuration
+# note:
+#  - 'strategy' controls the distribution of obstacles in the field
+#  - 'mode' controls whether the curriculum uses static stages or adaptive switching (adaptive)
+curriculum:
+  enabled: True
+  # 'strategy' controls the distribution of obstacles in the field
+  # optional: "none" / "linear" / "mixed"
+  strategy: "mixed"
+  # 'mode' controls whether the curriculum uses static stages or adaptive switching (adaptive)
+  # optional: "static" / "adaptive"
+  mode: "adaptive"
+
+  # 'stages' controls the number of obstacles and corresponding maximum episode numbers for each stage
+  #   - obstacles: list of obstacle numbers for each stage
+  #   - episodes: list of maximum episode numbers for each stage
+  # note: the length of 'obstacles' and 'episodes' must be the same, and their sum must equal 'num_episodes'
+  stages:
+    obstacles: [4, 7, 10]
+    episodes:  [500, 600, 700]
+
+  # 'preserve_replay_buffer' controls whether to preserve the replay buffer when switching stages (True to preserve, False to clear)
+  preserve_replay_buffer: True
+
+  # Adaptive-mode parameters (only applicable when mode = "adaptive")
+  adaptive:
+    N: 50   # 'N' is the sliding window size for tracking_rate averaging
+    # 'threshold_list' controls the threshold for adaptive stage switching (each element corresponds to a stage)
+    #   - stage 0: tracking_rate >= 0.9000 -> switch to stage 1
+    #   - stage 1: tracking_rate >= 0.8500 -> switch to stage 2
+    #   - stage 2: tracking_rate >= 0.8500 -> switch to stage 3
+    threshold_list: [0.90, 0.85, 0.85]
+
+# other training hyperparameters
+max_grad_norm: 0.5
+save_checkpoints: True
+checkpoint_interval: 10

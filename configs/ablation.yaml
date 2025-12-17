@@ -1,0 +1,94 @@
+# configs/ablation.yaml
+ablation_study:
+  name: "ITEMARL_Ablation_Study"
+  description: "Ablation study for ITEMARL framework"
+
+  # Base configuration
+  base_config:
+    env_config: "configs/env.yaml"
+    agent_config: "configs/agent.yaml"
+    train_config: "configs/train.yaml"
+
+  # Ablation factors
+  ablation_factors:
+    transformer_block:
+      levels: ["improve", "original"]
+      description: "Transformer block type"
+
+    multithreaded:
+      levels: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      description: "Number of worker threads (0 = no multithreading)"
+
+    curriculum:
+      levels: ["none", "static", "adaptive"]
+      description: "Curriculum learning strategy"
+
+  # Ablation experiments
+  experiments:
+    # Baseline configuration
+    baseline:
+      transformer_block: "improve"
+      multithreaded: 5
+      curriculum: "adaptive"
+#      description: "Full ITEMARL configuration"
+
+    # Single-factor ablation experiments
+    single_factor:
+      - name: "transformer_original"
+        transformer_block: "original"
+        keep_others: "baseline"
+#        description: "ITEMARL with original Transformer block"
+
+      # Multithreading ablation experiments
+      - name: "thread_0"
+        multithreaded: 0
+        keep_others: "baseline"
+#        description: "ITEMARL without multithreading"
+
+      - name: "thread_1"
+        multithreaded: 1
+        keep_others: "baseline"
+#        description: "ITEMARL with 1 worker thread"
+
+      - name: "thread_2"
+        multithreaded: 2
+        keep_others: "baseline"
+
+      - name: "thread_3"
+        multithreaded: 3
+        keep_others: "baseline"
+
+      - name: "thread_4"
+        multithreaded: 4
+        keep_others: "baseline"
+
+      - name: "thread_5"
+        multithreaded: 5
+        keep_others: "baseline"
+
+      - name: "thread_6"
+        multithreaded: 6
+        keep_others: "baseline"
+
+      - name: "thread_7"
+        multithreaded: 7
+        keep_others: "baseline"
+
+      - name: "thread_8"
+        multithreaded: 8
+        keep_others: "baseline"
+
+      # Curriculum learning ablation experiments
+      - name: "curriculum_none"
+        curriculum: "none"
+        keep_others: "baseline"
+
+      - name: "curriculum_static"
+        curriculum: "static"
+        keep_others: "baseline"
+
+  # Evaluation configuration
+  evaluation:
+    episodes: 1000
+    seeds: [101, 102, 103, 104, 105]
+    metrics: ["tracking_rate", "failure_rate", "cumulative_reward"]
